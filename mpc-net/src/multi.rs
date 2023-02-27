@@ -49,6 +49,7 @@ impl std::default::Default for Peer {
 impl Connections {
     /// Given a path and the `id` of oneself, initialize the structure
     fn init_from_path(&mut self, path: &str, id: usize) {
+        println!("THIS IS THE PATH: {}", path);
         let f = BufReader::new(File::open(path).expect("host configuration path"));
         let mut peer_id = 0;
         for line in f.lines() {

@@ -12,7 +12,7 @@
 #![deny(stable_features, unreachable_pub, non_shorthand_field_patterns)]
 #![deny(unused_attributes, unused_imports, unused_mut, missing_docs)]
 #![deny(renamed_and_removed_lints, stable_features, unused_allocation)]
-#![deny(unused_comparisons, bare_trait_objects, unused_must_use, const_err)]
+#![deny(unused_comparisons, bare_trait_objects, unused_must_use)]
 #![forbid(unsafe_code)]
 
 #[macro_use]
@@ -24,8 +24,8 @@ use ark_poly_commit::Evaluations;
 use ark_poly_commit::{LabeledCommitment, PCUniversalParams, PolynomialCommitment};
 use ark_relations::r1cs::ConstraintSynthesizer;
 use ark_std::rand::RngCore;
-use mpc_trait::MpcWire;
 use digest::Digest;
+use mpc_trait::MpcWire;
 
 use ark_std::{
     collections::BTreeMap,
@@ -107,7 +107,11 @@ impl<F: PrimeField, PC: PolynomialCommitment<F, DensePolynomial<F>>, D: Digest> 
         // TODO: Add check that c is in the correct mode.
         let index = AHPForR1CS::index(c)?;
         if srs.max_degree() < index.max_degree() {
-            println!("SRS deg {} vs circ deg {}", srs.max_degree(), index.max_degree());
+            println!(
+                "SRS deg {} vs circ deg {}",
+                srs.max_degree(),
+                index.max_degree()
+            );
             Err(Error::IndexTooLarge)?;
         }
 
